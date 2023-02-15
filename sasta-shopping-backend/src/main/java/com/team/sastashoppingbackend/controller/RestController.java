@@ -26,7 +26,7 @@ public class RestController {
 		return (List<Product>) productRepository.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{productId}")
 	public ResponseEntity<Product> findProductById(@PathVariable(value = "id") long id) {
 		Optional<Product> product = productRepository.findById(id);
 		if (product.isPresent()) {
