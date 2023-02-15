@@ -37,7 +37,7 @@ public class RestController {
 	}
 
 	@PostMapping
-	public Product saveUser(@Validated @RequestBody Product product) {
+	public Product saveProduct(@Validated @RequestBody Product product) {
 		return productRepository.save(product);
 	}
 
