@@ -1,7 +1,12 @@
 <template>
-  <div class="text-center">
-    <v-rating v-model="rating" readonly half-increments></v-rating>
-  </div>
+  <v-rating
+    :model-value="4.5"
+    color="amber"
+    density="compact"
+    half-increments
+    readonly
+    size="small"
+  ></v-rating>
 </template>
 
 <script lang="ts">

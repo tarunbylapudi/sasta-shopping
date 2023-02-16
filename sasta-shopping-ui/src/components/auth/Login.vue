@@ -5,8 +5,9 @@
       <v-form v-model="form" @submit.prevent="onSubmit">
         <v-text-field
           v-model="email"
+          variant="underlined"
           :readonly="loading"
-          :rules="[required]"
+          :rules="[rules.required, rules.email]"
           class="mb-2"
           clearable
           label="Email"
@@ -24,6 +25,7 @@
         <v-text-field
           v-model="password"
           :readonly="loading"
+          variant="underlined"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[rules.required, rules.min]"
           :type="show1 ? 'text' : 'password'"
@@ -65,8 +67,12 @@ export default {
     show1: false,
     rules: {
       required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => `The email and password you entered don't match`,
+      min: (value) => value.length >= 8 || "Min 8 characters",
+      email: (value) => {
+        const pattern =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || "Invalid e-mail.";
+      },
     },
   }),
 

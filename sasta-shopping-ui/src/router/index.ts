@@ -10,6 +10,9 @@ const ShopView = () =>
 const ProductPageView = () =>
   import(/* webpackChunkName:"productPage" */ "@/views/ProductPageView.vue");
 
+const CartView = () =>
+  import(/* webpackChunkName:"cart" */ "@/views/CartView.vue");
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -30,6 +33,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/products/:id",
     name: "productPage",
     component: ProductPageView,
+  },
+  {
+    path: "/cart",
+    name: "cart",
+    component: CartView,
   },
 ];
 

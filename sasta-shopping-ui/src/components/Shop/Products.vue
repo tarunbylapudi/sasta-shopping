@@ -1,7 +1,15 @@
 <template>
-  <v-main class="bg-grey-lighten-2">
-    <v-container class="">
-      <v-row>
+  <v-container class="">
+    <v-row>
+      <v-col class="" cols="12">
+        <strong>Products</strong>
+      </v-col>
+
+      <v-col v-for="product in products" :key="product.id" cols="6" md="3">
+        <product-card-layout :product="product" />
+      </v-col>
+    </v-row>
+    <!-- <v-row>
         <template v-for="n in 4" :key="n">
           <v-col class="mt-2" cols="12">
             <strong>Category {{ n }}</strong>
@@ -11,19 +19,23 @@
             <product-card-layout :product="j" />
           </v-col>
         </template>
-      </v-row>
-    </v-container>
-  </v-main>
+      </v-row> -->
+  </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { onMounted } from "vue";
+
+import { UseFetchProducts } from "@/store/composables";
+
 import ProductCardLayout from "./ProductCardLayout.vue";
 
 export default defineComponent({
   name: "Products",
   components: { ProductCardLayout },
   setup() {
+    onMounted(UseFetchProducts);
     const products = [
       {
         id: 1,
@@ -34,9 +46,9 @@ export default defineComponent({
       },
       {
         id: 2,
-        name: "sdkbjkf",
+        name: "sdkbfsdvnljnlfvnlnsvjkf",
         description: "sdjgysd",
-        price: 2,
+        price: 452,
         quantity: 2,
       },
       {
@@ -67,14 +79,8 @@ export default defineComponent({
         price: 2,
         quantity: 2,
       },
-      {
-        id: 7,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
     ];
+
     return { products };
   },
 });
