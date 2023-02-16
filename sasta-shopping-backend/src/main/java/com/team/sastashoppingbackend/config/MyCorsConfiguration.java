@@ -1,4 +1,4 @@
-package com.team.sastashoppingbackend.configuration;
+package com.team.sastashoppingbackend.config;
 
 import java.util.Arrays;
 
@@ -16,12 +16,12 @@ public class MyCorsConfiguration {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(Arrays.asList("http://example.com"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+    configuration.setAllowedHeaders(Arrays.asList("Authorizatsion", "Content-Type"));
     configuration.setMaxAge(3600L);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
 
-    return source.getCorsConfigurations();
-  }
+    return source;
+  }
 }
