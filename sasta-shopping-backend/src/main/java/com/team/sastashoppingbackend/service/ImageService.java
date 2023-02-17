@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.sastashoppingbackend.entity.Image;
 import com.team.sastashoppingbackend.exception.ResourceNotFoundException;
+import com.team.sastashoppingbackend.repository.ImageRepository;
 
 @Service
 public class ImageService {

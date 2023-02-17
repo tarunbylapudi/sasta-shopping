@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class Image {
 	private long id;
 	private String name;
 	private String type;
+	@Lob
 	private byte[] bytes;
 	@ManyToOne
 	@JoinColumn(name="product_id")
