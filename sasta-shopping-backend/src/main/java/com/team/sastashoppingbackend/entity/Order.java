@@ -3,6 +3,7 @@ package com.team.sastashoppingbackend.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,7 +23,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order", fetch = FetchType.EAGER)
 	private List<OrderItem> orderItems;
 
 }

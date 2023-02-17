@@ -3,6 +3,7 @@ package com.team.sastashoppingbackend.entity;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,6 +27,6 @@ public class Product {
 	private String description;
 	private double price;
 	private int quantity;
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy="product",fetch = FetchType.EAGER)
 	private List<Image> images; 
 }

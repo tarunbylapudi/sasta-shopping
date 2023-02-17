@@ -1,5 +1,6 @@
 package com.team.sastashoppingbackend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class Image {
 	private String name;
 	private String type;
 	@Lob
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] bytes;
 	@ManyToOne
 	@JoinColumn(name="product_id")
