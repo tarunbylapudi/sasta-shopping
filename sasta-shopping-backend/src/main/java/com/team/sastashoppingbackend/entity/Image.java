@@ -11,21 +11,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="order_items")
-public class OrderItem {
+@Table(name="images")
+public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private int quantity;
+	private long id;
+	private String name;
+	private String type;
+	private byte[] bytes;
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private Product product;
-	@ManyToOne
-	@JoinColumn(name="order_id")
-	private Order order;
 }
-

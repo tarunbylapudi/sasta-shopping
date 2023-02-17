@@ -1,66 +1,45 @@
-package com.team.sastashoppingbackend.service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.team.sastashoppingbackend.dto.ProductDTO;
 import com.team.sastashoppingbackend.entity.Product;
+import com.team.sastashoppingbackend.exception.ResourceNotFoundException;
 import com.team.sastashoppingbackend.repository.ProductRepository;
 
 @Service
 public class ProductService {
 
-	@Autowired
-	private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-	public List<ProductDTO> getAllProducts() {
-		List<Product> products = productRepository.findAll();
-		List<ProductDTO> productDTOs = new ArrayList<>();
-		for (Product product : products) {
-			productDTOs.add(new ProductDTO(product.getId(), product.getName(), product.getDescription(),
-					product.getPrice(), product.getQuantity()));
-		}
-		return productDTOs;
-	}
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 
-	public ProductDTO getProductById(long id) {
-		Product product = productRepository.findById(id).orElse(null);
-		if (product == null) {
-			return null;
-		}
-		return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(),
-				product.getQuantity());
-	}
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+    }
 
-	public ProductDTO createProduct(ProductDTO productDTO) {
-		Product product = new Product();
-		product.setName(productDTO.getName());
-		product.setDescription(productDTO.getDescription());
-		product.setPrice(productDTO.getPrice());
-		product.setQuantity(productDTO.getQuantity());
-		product = productRepository.save(product);
-		return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(),
-				product.getQuantity());
-	}
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
+    }
 
-	public ProductDTO updateProduct(long id, ProductDTO productDTO) {
-		Product product = productRepository.findById(id).orElse(null);
-		if (product == null) {
-			return null;
-		}
-		product.setName(productDTO.getName());
-		product.setDescription(productDTO.getDescription());
-		product.setPrice(productDTO.getPrice());
-		product.setQuantity(productDTO.getQuantity());
-		product = productRepository.save(product);
-		return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(),
-				product.getQuantity());
-	}
+    public Product updateProduct(Long id, Product productDetails) {
+        Product product = getProductById(id);
+        product.setName(productDetails.getName());
+        product.setDescription(productDetails.getDescription());
+        product.setPrice(productDetails.getPrice());
+        product.setQuantity(productDetails.getQuantity());
+        product.setImages(productDetails.getImages());
+        return productRepository.save(product);
+    }
 
-	public void deleteProduct(long id) {
-		productRepository.deleteById(id);
-	}
+    public ResponseEntity<?> deleteProduct(Long id) {
+        Product product = getProductById(id);
+        productRepository.delete(product);
+        return ResponseEntity.ok().build();
+    }
 }

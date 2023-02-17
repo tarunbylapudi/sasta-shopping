@@ -1,9 +1,12 @@
 package com.team.sastashoppingbackend.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +26,6 @@ public class Product {
 	private String description;
 	private double price;
 	private int quantity;
+	@OneToMany(mappedBy="product")
+	private List<Image> images; 
 }
