@@ -4,6 +4,7 @@ const state = (): GlobalState => {
   return {
     isLoggedIn: false,
     products: [],
+    ProductDetails: {},
   };
 };
 

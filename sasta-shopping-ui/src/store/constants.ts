@@ -1,7 +1,9 @@
 //mutations
 export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
+export const UPDATE_PRODUCT_DETAILS = "UPDATE_PRODUCT_DETAILS";
 
 //actions
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
+export const FETCH_PRODUCT_DETAILS = "FETCH_PRODUCT_DETAILS";
 
 //getters

@@ -24,10 +24,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { onMounted } from "vue";
 
 import { UseFetchProducts } from "@/store/composables";
+import { useStore } from "vuex";
 
 import ProductCardLayout from "./ProductCardLayout.vue";
 
@@ -35,51 +36,9 @@ export default defineComponent({
   name: "Products",
   components: { ProductCardLayout },
   setup() {
+    const store = useStore();
     onMounted(UseFetchProducts);
-    const products = [
-      {
-        id: 1,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
-      {
-        id: 2,
-        name: "sdkbfsdvnljnlfvnlnsvjkf",
-        description: "sdjgysd",
-        price: 452,
-        quantity: 2,
-      },
-      {
-        id: 3,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
-      {
-        id: 4,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
-      {
-        id: 5,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
-      {
-        id: 6,
-        name: "sdkbjkf",
-        description: "sdjgysd",
-        price: 2,
-        quantity: 2,
-      },
-    ];
+    const products = computed(() => store.state.products);
 
     return { products };
   },

@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto my-12" max-width="374">
-    <v-card-title>Cafe Badilico sfdsfE</v-card-title>
+    <v-card-title>{{ ProductDetails.name }}</v-card-title>
 
     <v-card-subtitle>
       <span class="me-1">Ratings</span>
@@ -13,28 +13,41 @@
         <div class="text-grey ms-4">4.5 (413)</div>
       </v-row>
 
-      <div class="my-4 text-subtitle-1">₹ 70 /-</div>
+      <div class="my-4 text-subtitle-1">₹ {{ ProductDetails.price }} /-</div>
 
-      <div>
-        Small plates, salads & sandwiches - an intimate setting with 12 indoor
-        seats plus patio seating. Small plates, salads & sandwiches - an
-        intimate setting with 12 indoor seats plus patio seating. Small plates,
-        salads & sandwiches - an intimate setting with 12 indoor seats plus
-        patio seating.
-      </div>
+      <div>{{ ProductDetails.description }}</div>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, onMounted } from "vue";
+//import { useRoute } from "vue-router";
+
+import { UseFetchProductDetails } from "@/store/composables";
+
 import Rating from "../shared/Rating.vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "ProductDetails",
   components: { Rating },
   setup() {
-    return {};
+    const route = useRoute();
+    const store = useStore();
+
+    const getProductDetails = () => {
+      const productId: string = route.params.id as string;
+      console.log(route.params.id);
+      UseFetchProductDetails(productId);
+    };
+
+    onMounted(getProductDetails);
+
+    const ProductDetails = computed(() => store.state.ProductDetails);
+
+    return { ProductDetails };
   },
 });
 </script>

@@ -7,7 +7,7 @@
         cover
       ></v-img>
 
-      <v-card-title> {{ product.name }} </v-card-title>
+      <v-card-title class="text"> {{ product.name }} </v-card-title>
       <v-card-subtitle class="text-subtitle-2 font-weight-bold"
         >Price : ₹ {{ product.price }} /-</v-card-subtitle
       >
