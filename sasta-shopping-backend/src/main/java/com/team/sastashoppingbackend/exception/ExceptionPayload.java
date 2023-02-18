@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExceptionPayload extends Exception {
+public class ExceptionPayload {
 	private String error;
 	private int code;
 	private Date timeStamp;
