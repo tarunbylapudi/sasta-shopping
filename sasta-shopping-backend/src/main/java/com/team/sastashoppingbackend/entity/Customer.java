@@ -7,29 +7,25 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="products")
-public class Product {
-	
+@Table(name="customers")
+public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String name;
-	private String description;
-	private double price;
-	private int quantity;
-	@Max(5)
-	private float rating;
-	@OneToMany(mappedBy="product",fetch = FetchType.EAGER)
-	private List<Image> images; 
+	private String email;
+	private String phoneNumber;
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="customer_id")
+	private List<Order> orders;
 }
