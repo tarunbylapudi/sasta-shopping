@@ -19,7 +19,7 @@ public class ContactController {
 
 	@PostMapping
 	public ResponseEntity<Contact> createContact(@RequestBody Contact contact) {
-		Contact newContact = contactService.createCustomer(contact);
+		Contact newContact = contactService.createContact(contact);
 		return new ResponseEntity<>(newContact, HttpStatus.CREATED);
 	}
 
