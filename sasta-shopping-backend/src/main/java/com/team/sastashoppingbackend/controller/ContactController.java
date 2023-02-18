@@ -16,11 +16,11 @@ import com.team.sastashoppingbackend.service.ContactService;
 @CrossOrigin(origins = "*")
 public class ContactController {
 	private ContactService contactService;
-	
-	  @PostMapping
-	    public ResponseEntity<Contact> createCustomer(@RequestBody Contact contact) {
-		  Contact newContact = contactService.createCustomer(contact);
-	        return new ResponseEntity<>(newContact, HttpStatus.CREATED);
-	    }
+
+	@PostMapping
+	public ResponseEntity<Contact> createContact(@RequestBody Contact contact) {
+		Contact newContact = contactService.createCustomer(contact);
+		return new ResponseEntity<>(newContact, HttpStatus.CREATED);
+	}
 
 }
