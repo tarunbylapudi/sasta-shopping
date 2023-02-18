@@ -21,7 +21,6 @@ public class Contact {
 	private long id;
 	private String name;
 	private String email;
-	@Max(10)
 	private String mobile;
 	private String type;
 	private String description;
