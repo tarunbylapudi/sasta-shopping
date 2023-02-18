@@ -13,6 +13,14 @@ const ProductPageView = () =>
 const CartView = () =>
   import(/* webpackChunkName:"cart" */ "@/views/CartView.vue");
 
+const PageNotFound = () =>
+  import(/* webpackChunkName:"404" */ "@/components/shared/PageNotFound.vue");
+
+const ContactUs = () =>
+  import(
+    /* webpackChunkName:"contactUs" */ "@/components/ContactUs/ContactUs.vue"
+  );
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -39,6 +47,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "cart",
     component: CartView,
   },
+  {
+    path: "/contact",
+    name: "contact",
+    component: ContactUs,
+  },
+  { path: "/:pathMatch(.*)*", name: "not-found", component: PageNotFound },
 ];
 
 const router = createRouter({

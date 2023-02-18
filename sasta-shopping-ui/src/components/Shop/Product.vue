@@ -1,54 +1,52 @@
 <template>
-  <v-container>
-    <v-card class="pa-5">
-      <v-row>
-        <v-col cols="12" sm="6">
-          <carousel />
-          <v-row class="ma-2" no-gutters>
-            <v-col
-              cols="6"
-              class="d-flex text-center justify-center align-center"
-            >
-              <h3>Add Quantity :</h3>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                label="Quantity"
-                model-value=""
-                variant="underlined"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+  <v-card class="pa-5">
+    <v-row>
+      <v-col cols="12" sm="6">
+        <carousel />
+        <v-row class="ma-2" no-gutters>
+          <v-col
+            cols="6"
+            class="d-flex text-center justify-center align-center"
+          >
+            <h3>Add Quantity :</h3>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+              label="Quantity"
+              model-value=""
+              variant="underlined"
+            ></v-text-field>
+          </v-col>
+        </v-row>
 
-          <div class="d-flex justify-center align-center" style="gap: 3rem">
-            <v-btn
-              height="40"
-              :loading="loading"
-              :disabled="loading"
-              color="blue-grey"
-              prepend-icon="mdi-cart-plus"
-              @click="load"
-            >
-              Add to cart
-            </v-btn>
-            <v-btn
-              height="40"
-              :loading="loading"
-              :disabled="loading"
-              color="orange-darken-2"
-              prepend-icon="mdi-lightning-bolt"
-              @click="load"
-            >
-              Buy now
-            </v-btn>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <product-details />
-        </v-col>
-      </v-row>
-    </v-card>
-  </v-container>
+        <div class="d-flex justify-center align-center" style="gap: 3rem">
+          <v-btn
+            height="40"
+            :loading="loading"
+            :disabled="loading"
+            color="blue-grey"
+            prepend-icon="mdi-cart-plus"
+            @click="load"
+          >
+            Add to cart
+          </v-btn>
+          <v-btn
+            height="40"
+            :loading="loading"
+            :disabled="loading"
+            color="orange-darken-2"
+            prepend-icon="mdi-lightning-bolt"
+            @click="load"
+          >
+            Buy now
+          </v-btn>
+        </div>
+      </v-col>
+      <v-col cols="12" sm="6">
+        <product-details />
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script lang="ts">

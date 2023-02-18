@@ -10,6 +10,7 @@
     <v-card-text>
       <v-row align="center" class="mx-0">
         <rating />
+
         <div class="text-grey ms-4">4.5 (413)</div>
       </v-row>
 
@@ -18,6 +19,8 @@
       <div>{{ ProductDetails.description }}</div>
     </v-card-text>
   </v-card>
+
+  <!-- <v-img :src="url"></v-img> -->
 </template>
 
 <script lang="ts">
@@ -25,6 +28,7 @@ import { computed, defineComponent, onMounted } from "vue";
 //import { useRoute } from "vue-router";
 
 import { UseFetchProductDetails } from "@/store/composables";
+//import ImageByteProcesser from "@/Utils/ImageByteProcesser";
 
 import Rating from "../shared/Rating.vue";
 import { useStore } from "vuex";
@@ -39,13 +43,17 @@ export default defineComponent({
 
     const getProductDetails = () => {
       const productId: string = route.params.id as string;
-      console.log(route.params.id);
+
       UseFetchProductDetails(productId);
     };
 
     onMounted(getProductDetails);
+    onMounted()
 
     const ProductDetails = computed(() => store.state.ProductDetails);
+    console.log(ProductDetails.value.images[0].bytes);
+    //// const bytes: string = ProductDetails.value.images[0].bytes;
+    // const url = ImageByteProcesser(bytes);
 
     return { ProductDetails };
   },

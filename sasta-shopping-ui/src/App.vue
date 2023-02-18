@@ -13,6 +13,7 @@
       <v-btn icon>
         <v-icon icon="mdi-cart" size="large"></v-icon>
       </v-btn>
+
       <v-spacer></v-spacer>
 
       <v-btn icon>
@@ -52,23 +53,30 @@
     </v-navigation-drawer>
 
     <v-main class="bg-grey-lighten-2">
-      <router-view />
+      <v-container>
+        <router-view />
+      </v-container>
     </v-main>
-    <footer></footer>
+    <foooter />
   </v-app>
 </template>
 
 <script>
-//import Footer from "@/components/shared/Footer.vue";
+import Foooter from "@/components/shared/Foooter.vue";
 export default {
   name: "App",
-  components: {},
+  components: { Foooter },
   data: () => ({
     drawer: false,
     selectedItem: 0,
     items: [
       { text: "Shop", icon: "mdi-store", path: "/shop" },
-      { text: "cart", icon: "mdi-cart", path: "/cart" },
+      { text: "Cart", icon: "mdi-cart", path: "/cart" },
+      {
+        text: "Contact Us",
+        icon: "mdi-human-greeting-proximity",
+        path: "/contact",
+      },
     ],
   }),
 };

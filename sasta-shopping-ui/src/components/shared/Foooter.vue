@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-  name: "Footer",
+  name: "Foooter",
   data: () => ({
     links: ["Home", "About Us", "Team", "Services", "Blog", "Contact Us"],
   }),
