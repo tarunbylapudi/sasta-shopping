@@ -1,5 +1,8 @@
 package com.team.sastashoppingbackend.security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,9 +33,11 @@ public class AuthenticationService {
         .role(Role.USER)
         .build();
     repository.save(user);
-    var jwtToken = jwtService.generateToken(new MyUserDetails(user));
+    var jwtToken = jwtService.generateToken(createClaims(user),new MyUserDetails(user));
+    boolean isAdmin = "ADMIN".equals(user.getRole());
     return AuthenticationResponse.builder()
         .token(jwtToken)
+        .isAdmin(isAdmin)
         .build();
   }
 
@@ -45,9 +50,21 @@ public class AuthenticationService {
     );
     var user = repository.findByUserName(request.getUserName())
         .orElseThrow();
-    var jwtToken = jwtService.generateToken(new MyUserDetails(user));
+    var jwtToken = jwtService.generateToken(createClaims(user),new MyUserDetails(user));
+    boolean isAdmin = "ADMIN".equals(user.getRole().name());
     return AuthenticationResponse.builder()
         .token(jwtToken)
+        .isAdmin(isAdmin)
         .build();
   }
+  
+
+private Map<String,Object> createClaims(User user){
+	Map<String,Object> map = new HashMap<>();
+	map.put("firstName", user.getFirstName());
+	map.put("role", user.getRole().name());
+	
+	return map;
+}
+
 }
