@@ -28,6 +28,7 @@ import { computed, defineComponent, onMounted } from "vue";
 //import { useRoute } from "vue-router";
 
 import { UseFetchProductDetails } from "@/store/composables";
+import { useImageConversion } from "@/store/composables";
 //import ImageByteProcesser from "@/Utils/ImageByteProcesser";
 
 import Rating from "../shared/Rating.vue";
@@ -48,12 +49,9 @@ export default defineComponent({
     };
 
     onMounted(getProductDetails);
-    onMounted()
+    onMounted(useImageConversion);
 
     const ProductDetails = computed(() => store.state.ProductDetails);
-    console.log(ProductDetails.value.images[0].bytes);
-    //// const bytes: string = ProductDetails.value.images[0].bytes;
-    // const url = ImageByteProcesser(bytes);
 
     return { ProductDetails };
   },

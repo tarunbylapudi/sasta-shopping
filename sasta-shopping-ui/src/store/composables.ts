@@ -1,7 +1,11 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { key } from ".";
-import { FETCH_PRODUCTS, FETCH_PRODUCT_DETAILS } from "./constants";
+import {
+  FETCH_PRODUCTS,
+  FETCH_PRODUCT_DETAILS,
+  IMAGE_CONVERSION,
+} from "./constants";
 
 //getters
 
@@ -9,6 +13,11 @@ import { FETCH_PRODUCTS, FETCH_PRODUCT_DETAILS } from "./constants";
 //   const store = useStore(key);
 //   return computed<Job[]>(() => store.getters[FILTERED_JOBS]);
 // };
+
+export const useImageConversion = () => {
+  const store = useStore();
+  return computed<Map<number, string[]>>(() => store.getters[IMAGE_CONVERSION]);
+};
 
 //actions
 

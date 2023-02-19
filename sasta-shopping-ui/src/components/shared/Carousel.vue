@@ -1,34 +1,45 @@
 <template>
-  <v-carousel cycle height="370" hide-delimiter-background show-arrows="hover">
-    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-      <v-sheet :color="colors[i]" height="100%">
+  <v-card
+    ><v-carousel
+      cycle
+      interval="2000"
+      :height="height"
+      :width="width"
+      hide-delimiter-background
+      show-arrows="hover"
+    >
+      <v-carousel-item v-for="image in images" :key="image">
         <div class="d-flex fill-height justify-center align-center">
-          <div class="text-h2">{{ slide }} Slide</div>
+          <v-img :aspect-ratio="1" :src="image" cover></v-img>
         </div>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
+      </v-carousel-item> </v-carousel
+  ></v-card>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "Carousel",
-  setup() {
-    return {};
+  props: {
+    images: {
+      type: Array as PropType<string[]>,
+      required: true,
+    },
+    width: {
+      type: String,
+      required: false,
+      default: "auto",
+    },
+    height: {
+      type: String,
+      required: false,
+      default: "370",
+    },
   },
-  data() {
-    return {
-      colors: [
-        "indigo",
-        "warning",
-        "pink darken-2",
-        "red lighten-1",
-        "deep-purple accent-4",
-      ],
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
-    };
+  setup() {
+    const slides = ["First", "Second", "Third", "Fourth", "Fifth"];
+    return { slides };
   },
 });
 </script>

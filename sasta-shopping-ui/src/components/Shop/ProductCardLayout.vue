@@ -1,11 +1,8 @@
 <template>
   <router-link :to="productPageLink" class="text-decoration-none"
     ><v-card width="auto" height="auto">
-      <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-        height="150"
-        cover
-      ></v-img>
+      <v-img :src="imgLink" height="150" cover></v-img>
+      <v-img src="imgLink"></v-img>
 
       <v-card-title class="text"> {{ product.name }} </v-card-title>
       <v-card-subtitle class="text-subtitle-2 font-weight-bold"
@@ -34,10 +31,16 @@ export default defineComponent({
       type: Object as PropType<Product>,
       required: true,
     },
+    images: {
+      type: Map as PropType<Map<number, string[]>>,
+      required: true,
+    },
   },
   setup(props) {
     const productPageLink = computed(() => `/products/${props.product.id}`);
-    return { productPageLink };
+    const imgArray: string[] = props.images.get(props.product.id) as string[];
+    const imgLink: string = imgArray[0];
+    return { productPageLink, imgLink };
   },
 });
 </script>

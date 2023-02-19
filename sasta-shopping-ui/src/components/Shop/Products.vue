@@ -6,7 +6,7 @@
       </v-col>
 
       <v-col v-for="product in products" :key="product.id" cols="6" md="3">
-        <product-card-layout :product="product" />
+        <product-card-layout :product="product" :images="Images" />
       </v-col>
     </v-row>
     <!-- <v-row>
@@ -27,7 +27,7 @@
 import { computed, defineComponent } from "vue";
 import { onMounted } from "vue";
 
-import { UseFetchProducts } from "@/store/composables";
+import { UseFetchProducts, useImageConversion } from "@/store/composables";
 import { useStore } from "vuex";
 
 import ProductCardLayout from "./ProductCardLayout.vue";
@@ -38,9 +38,10 @@ export default defineComponent({
   setup() {
     const store = useStore();
     onMounted(UseFetchProducts);
+    const Images = useImageConversion();
     const products = computed(() => store.state.products);
 
-    return { products };
+    return { products, Images };
   },
 });
 </script>

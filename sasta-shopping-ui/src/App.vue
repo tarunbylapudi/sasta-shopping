@@ -4,22 +4,35 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Application</v-toolbar-title>
-      <v-btn icon>
-        <v-icon icon="mdi-store" size="large"></v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon icon="mdi-cart" size="large"></v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon icon="mdi-cart" size="large"></v-icon>
-      </v-btn>
-
+      <v-list :lines="false" density="compact">
+        <v-list-item
+          v-for="item in items"
+          :key="item.path"
+          :to="item.path"
+          active-color="primary"
+          class="horizontal-list-item"
+          @click="mainNavSnackHandler"
+        >
+          <v-list-item-content>
+            {{ item.text }}
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn v-show="isAuthenticated" icon>
         <v-badge dot floating color="red">
           <v-icon icon="mdi-cart" size="large"></v-icon>
         </v-badge>
+      </v-btn>
+
+      <v-btn
+        v-show="isAuthenticated"
+        color="red"
+        variant="tonal"
+        @click="LogoutHandler"
+      >
+        Logout
       </v-btn>
     </v-app-bar>
 
@@ -59,17 +72,32 @@
     </v-main>
     <foooter />
   </v-app>
+  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from "vue";
+import { useStore } from "vuex";
+import { LOGOUT } from "./store/constants";
 import Foooter from "@/components/shared/Foooter.vue";
-export default {
+import { useRouter } from "vue-router";
+
+export default defineComponent({
   name: "App",
   components: { Foooter },
-  data: () => ({
-    drawer: false,
-    selectedItem: 0,
-    items: [
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const snack = ref(false);
+    const text = ref("");
+    const snackColor = ref("");
+
+    const drawer = ref(false);
+    const selectedItem = ref(0);
+    const items = [
+      { text: "Home", icon: "mdi-home-account", path: "/" },
+      { text: "Profile", icon: "mdi-account", path: "/profile" },
       { text: "Shop", icon: "mdi-store", path: "/shop" },
       { text: "Cart", icon: "mdi-cart", path: "/cart" },
       {
@@ -77,7 +105,39 @@ export default {
         icon: "mdi-human-greeting-proximity",
         path: "/contact",
       },
-    ],
-  }),
-};
+    ];
+    const isAuthenticated = computed(() => store.state.isAuthenticated);
+
+    const mainNavSnackHandler = () => {
+      console.log("a");
+      if (isAuthenticated.value) {
+        console.log("b");
+        text.value = "Please Login First!";
+        snackColor.value =
+      }
+    };
+
+    const LogoutHandler = () => {
+      store.dispatch(LOGOUT);
+      router.push("/login");
+    };
+    return {
+      drawer,
+      selectedItem,
+      items,
+      LogoutHandler,
+      isAuthenticated,
+      mainNavSnackHandler,
+      snack,
+      text,
+      snackColor,
+    };
+  },
+});
 </script>
+<style scoped>
+.horizontal-list-item {
+  display: inline-block;
+  /* margin-right: 16px; adjust this to your desired spacing */
+}
+</style>

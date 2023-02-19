@@ -13,3 +13,25 @@ export interface Image {
   type: string;
   bytes: string;
 }
+export interface contactUs {
+  name: string;
+  email: string;
+  mobile: string;
+  type: string;
+  description: string;
+}
+
+export interface LoginPayload {
+  userName: string;
+  password: string;
+}
+export interface LoginResponse {
+  token: string;
+  isAdmin: boolean;
+}
+
+export interface snackBar {
+  snack: boolean;
+  text: string;
+  color: string;
+}

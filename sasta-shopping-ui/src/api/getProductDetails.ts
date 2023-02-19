@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/plugins/axios";
 
 const getProductDetails = async (productId: string) => {
   const baseUrl = process.env.VUE_APP_GET_PRODUCTS;

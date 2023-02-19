@@ -2,7 +2,8 @@ import { Product } from "@/api/types";
 import { Image } from "@/api/types";
 
 export interface GlobalState {
-  isLoggedIn: boolean;
+  user: null | object;
+  isAuthenticated: boolean;
   products: Product[];
   ProductDetails: {
     id: number;
@@ -12,4 +13,8 @@ export interface GlobalState {
     quantity: number;
     images: Image[];
   };
+}
+
+export interface User {
+  userId: string;
 }

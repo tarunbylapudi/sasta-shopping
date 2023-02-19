@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { requiresAuth } from "@/Utils/auth/gaurd";
 
 const ProfileView = () =>
   import(/* webpackChunkName:"profile" */ "@/views/ProfileView.vue");
@@ -16,16 +17,31 @@ const CartView = () =>
 const PageNotFound = () =>
   import(/* webpackChunkName:"404" */ "@/components/shared/PageNotFound.vue");
 
+const AccessDenied = () =>
+  import(
+    /* webpackChunkName:"accessDenied" */ "@/components/shared/AccessDenied.vue"
+  );
+
 const ContactUs = () =>
   import(
     /* webpackChunkName:"contactUs" */ "@/components/ContactUs/ContactUs.vue"
   );
 
+const HomeView = () =>
+  import(/* webpackChunkName:"home" */ "@/views/HomeView.vue");
+
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
+    path: "/profile",
     name: "profile",
     component: ProfileView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/",
+    name: "home",
+    component: HomeView,
+    meta: { requiresAuth: true },
   },
   {
     path: "/login",
@@ -36,23 +52,37 @@ const routes: Array<RouteRecordRaw> = [
     path: "/shop",
     name: "shop",
     component: ShopView,
+    meta: { requiresAuth: true, requiresRole: "admin" },
   },
   {
     path: "/products/:id",
     name: "productPage",
     component: ProductPageView,
+    meta: { requiresAuth: true },
   },
   {
     path: "/cart",
     name: "cart",
     component: CartView,
+    meta: { requiresAuth: true },
   },
   {
     path: "/contact",
     name: "contact",
     component: ContactUs,
   },
-  { path: "/:pathMatch(.*)*", name: "not-found", component: PageNotFound },
+  {
+    path: "/accessDenied",
+    name: "accessDenied",
+    component: AccessDenied,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: PageNotFound,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({

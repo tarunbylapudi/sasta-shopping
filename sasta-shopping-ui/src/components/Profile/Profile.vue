@@ -1,71 +1,176 @@
 <template>
-  <v-navigation-drawer>
-    <v-sheet color="grey-lighten-4" class="pa-4">
-      <v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar>
+  <v-card class="mx-auto my-auto pa-5" max-width="700"><profile-card /></v-card>
 
-      <div>john@google.com</div>
-    </v-sheet>
+  <v-card class="mx-auto my-auto pa-5" max-width="700">
+    <v-form validate-on="submit" @submit.prevent="">
+      <div class="d-flex align-content-end justify-end">
+        <v-btn
+          v-if="!editProfile"
+          color="green"
+          class="mr-1"
+          @click="editProfileHandller"
+          >Edit Profile</v-btn
+        >
+        <v-btn
+          v-if="editProfile"
+          color="green"
+          class="mr-1"
+          @click="saveProfileHandler"
+          >Save</v-btn
+        >
+        <v-btn
+          v-if="editProfile"
+          color="red"
+          class="mr-1"
+          @click="cancelEditProfileHandler"
+          >Cancel</v-btn
+        >
+      </div>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              v-model="name"
+              label="Name"
+              variant="underlined"
+              :clearable="!readonly"
+              :readonly="readonly"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
 
-    <v-divider></v-divider>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              v-model="email"
+              label="Email"
+              variant="underlined"
+              :clearable="!readonly"
+              :readonly="readonly"
+              :rules="[rules.required, rules.email]"
+            ></v-text-field>
+          </v-col>
 
-    <v-list>
-      <v-list-item v-for="[icon, text] in links" :key="icon" link>
-        <template #prepend>
-          <v-icon>{{ icon }}</v-icon>
-        </template>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              v-model="phone"
+              type="tel"
+              variant="underlined"
+              label="Phone"
+              :clearable="!readonly"
+              :readonly="readonly"
+            ></v-text-field>
+          </v-col>
 
-        <v-list-item-title>{{ text }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer>
-
-  <v-container class="py-8 px-6">
-    <v-row>
-      <v-col v-for="card in cards" :key="card" cols="12">
-        <v-card>
-          <v-list lines="two">
-            <v-list-subheader>{{ card }}</v-list-subheader>
-            <template v-for="n in 6" :key="n">
-              <v-list-item>
-                <template #prepend>
-                  <v-avatar color="grey-darken-1"></v-avatar>
+          <v-col cols="12" sm="6">
+            <div class="text-center">
+              <v-menu open-on-hover>
+                <template #activator="{ props }">
+                  <!--  -->
+                  <v-text-field
+                    v-model="gender"
+                    variant="underlined"
+                    label="Gender"
+                    append-inner-icon="mdi-chevron-down"
+                    :clearable="!readonly"
+                    :readonly="readonly"
+                    v-bind="props"
+                    :rules="[rules.required]"
+                  ></v-text-field>
                 </template>
 
-                <v-list-item-title>Message {{ n }}</v-list-item-title>
-
-                <v-list-item-subtitle>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Nihil repellendus distinctio similique
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
-            </template>
-          </v-list>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+                <v-list nav>
+                  <v-list-item
+                    v-for="(item, index) in items"
+                    :key="index"
+                    :title="item.title"
+                    @click="updategender(item.title)"
+                  >
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </v-card>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import axios from "@/plugins/axios";
+import { defineComponent, ref } from "vue";
+import ProfileCard from "./ProfileCard.vue";
 
 export default defineComponent({
   name: "Profile",
+  components: { ProfileCard },
   setup() {
-    return {};
+    const name = ref("mhvjjv");
+    const email = ref("");
+    const phone = ref<number>();
+    const gender = ref("");
+    const readonly = ref(true);
+    const editProfile = ref(false);
+
+    const editProfileHandller = () => {
+      editProfile.value = true;
+      readonly.value = false;
+    };
+    const saveProfileHandler = async () => {
+      editProfile.value = false;
+      readonly.value = true;
+      try {
+        const response = await axios.post(process.env.VUE_APP_POST_CONTACT_US, {
+          name: name.value,
+          email: email.value,
+          mobile: phone.value,
+        });
+
+        console.log(response.status);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const cancelEditProfileHandler = () => {
+      editProfile.value = false;
+      readonly.value = true;
+    };
+
+    const rules = {
+      required: (value: any) => !!value || "Required.",
+      min: (value: string) => value.length >= 8 || "Min 8 characters",
+      phone: (value: string) => {
+        const pattern = /"^\\d{10}$"/;
+        return pattern.test(value) || "Invalid Phone Number";
+      },
+      email: (value: string) => {
+        const pattern =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || "Invalid e-mail.";
+      },
+    };
+
+    const items = [{ title: "Male" }, { title: "Female" }, { title: "Others" }];
+    const updategender = (title: string) => {
+      gender.value = title;
+    };
+    return {
+      name,
+      email,
+      phone,
+      gender,
+      saveProfileHandler,
+      readonly,
+      items,
+      updategender,
+      rules,
+      editProfileHandller,
+      editProfile,
+      cancelEditProfileHandler,
+    };
   },
   data() {
-    return {
-      cards: ["Today", "Yesterday"],
-
-      links: [
-        ["mdi-inbox-arrow-down", "Inbox"],
-        ["mdi-send", "Send"],
-        ["mdi-delete", "Trash"],
-        ["mdi-alert-octagon", "Spam"],
-      ],
-    };
+    return {};
   },
 });
 </script>
