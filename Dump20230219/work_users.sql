@@ -16,32 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order_items`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `order_items`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_items` (
+CREATE TABLE `users` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `quantity` int NOT NULL,
-  `order_id` bigint DEFAULT NULL,
-  `product_id` bigint DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `user_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKbioxgbv59vetrxe0ejfubep1w` (`order_id`),
-  KEY `FKocimc7dtr037rh4ls4l95nlfi` (`product_id`),
-  CONSTRAINT `FKbioxgbv59vetrxe0ejfubep1w` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  CONSTRAINT `FKocimc7dtr037rh4ls4l95nlfi` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `UK_k8d0f2n7n88w1a16yhua64onx` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order_items`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `order_items` WRITE;
-/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'vamsi@gmail.com','Vamsi','Krishna','$2a$10$Ii7EMLJAGxiG2TzRJpE6Ye67WYWX3APIjlDJ./BoyFWA2tkxl/QWm','USER',NULL),(2,'vamsi@gmail.com','Vamsi','Krishna','$2a$10$rb23ZylnpWQHlbwJsV8JD.mZ4thwDNKzbe.NsYPaw0ZfoJ5NxPNVW','USER',NULL),(3,'vamsi@gmail.com','Vamsi','Krishna','$2a$10$USfDmqgnmUV3wxE31gyQReVbXsI9urdPv0WMbLQv/0UKKDHZvxFuO','USER',NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-19  1:23:33
+-- Dump completed on 2023-02-19  9:54:05

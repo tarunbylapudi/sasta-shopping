@@ -16,27 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order_product`
+-- Table structure for table `order_items`
 --
 
-DROP TABLE IF EXISTS `order_product`;
+DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_product` (
-  `order_id` binary(16) NOT NULL,
-  `product_id` binary(16) NOT NULL,
-  UNIQUE KEY `UK_729vil5pvmbprq6b1sf4en1ft` (`product_id`),
-  CONSTRAINT `FK42vplkj19xcux77wdg18abgo0` FOREIGN KEY (`product_id`) REFERENCES `order_item` (`id`)
+CREATE TABLE `order_items` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `quantity` int NOT NULL,
+  `order_id` bigint DEFAULT NULL,
+  `product_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKbioxgbv59vetrxe0ejfubep1w` (`order_id`),
+  KEY `FKocimc7dtr037rh4ls4l95nlfi` (`product_id`),
+  CONSTRAINT `FKbioxgbv59vetrxe0ejfubep1w` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `FKocimc7dtr037rh4ls4l95nlfi` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order_product`
+-- Dumping data for table `order_items`
 --
 
-LOCK TABLES `order_product` WRITE;
-/*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
+LOCK TABLES `order_items` WRITE;
+/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-19  1:23:33
+-- Dump completed on 2023-02-19  9:54:05
