@@ -16,5 +16,10 @@ export interface GlobalState {
 }
 
 export interface User {
-  userId: string;
+  exp: number;
+  firstName: string;
+  iat: number;
+  role: string;
+  sub: string;
+  userId: number;
 }

@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import Home from "./Home.vue";
+import Home from "@/components/home/Home.vue";
 
 export default defineComponent({
   name: "HomeView",

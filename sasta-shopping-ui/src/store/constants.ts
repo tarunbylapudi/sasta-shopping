@@ -10,6 +10,7 @@ export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const FETCH_PRODUCT_DETAILS = "FETCH_PRODUCT_DETAILS";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const CONTACT_US = "CONTACT_US";
 
 //getters
 export const IMAGE_CONVERSION = "IMAGE_CONVERSION";

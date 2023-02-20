@@ -20,7 +20,7 @@ import com.team.sastashoppingbackend.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class ProductController {
 
     @Autowired

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="374">
+  <v-card class="mx-auto" max-width="auto">
     <v-card-title>{{ ProductDetails.name }}</v-card-title>
 
     <v-card-subtitle>

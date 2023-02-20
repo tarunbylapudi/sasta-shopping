@@ -1,6 +1,7 @@
 <template>
   <v-card
     ><v-carousel
+      class=""
       cycle
       interval="2000"
       :height="height"
@@ -37,9 +38,6 @@ export default defineComponent({
       default: "370",
     },
   },
-  setup() {
-    const slides = ["First", "Second", "Third", "Fourth", "Fifth"];
-    return { slides };
-  },
+  setup() {},
 });
 </script>

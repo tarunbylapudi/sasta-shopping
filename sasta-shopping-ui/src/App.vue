@@ -3,8 +3,8 @@
     <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
-      <v-list :lines="false" density="compact">
+      <v-toolbar-title>Sasta Shopping</v-toolbar-title>
+      <v-list :lines="false" density="compact" class="displayNone">
         <v-list-item
           v-for="item in items"
           :key="item.path"
@@ -56,17 +56,17 @@
           :to="item.path"
           active-color="primary"
         >
-          <template v-slot:prepend>
+          <template #prepend>
             <v-icon :icon="item.icon"></v-icon>
           </template>
 
-          <v-list-item-title v-text="item.text"></v-list-item-title>
+          <v-list-item-title>{{ item.text }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-main class="bg-grey-lighten-2">
-      <v-container>
+      <v-container fluid>
         <router-view />
       </v-container>
     </v-main>
@@ -100,6 +100,7 @@ export default defineComponent({
       { text: "Profile", icon: "mdi-account", path: "/profile" },
       { text: "Shop", icon: "mdi-store", path: "/shop" },
       { text: "Cart", icon: "mdi-cart", path: "/cart" },
+
       {
         text: "Contact Us",
         icon: "mdi-human-greeting-proximity",
@@ -109,11 +110,12 @@ export default defineComponent({
     const isAuthenticated = computed(() => store.state.isAuthenticated);
 
     const mainNavSnackHandler = () => {
-      console.log("a");
       if (isAuthenticated.value) {
-        console.log("b");
+        console.log(isAuthenticated.value);
+        console.log("s");
+        snack.value = true;
         text.value = "Please Login First!";
-        snackColor.value =
+        snackColor.value = "red";
       }
     };
 
@@ -139,5 +141,11 @@ export default defineComponent({
 .horizontal-list-item {
   display: inline-block;
   /* margin-right: 16px; adjust this to your desired spacing */
+}
+
+@media only screen and (max-width: 768px) {
+  .displayNone {
+    display: none !important;
+  }
 }
 </style>

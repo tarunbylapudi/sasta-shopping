@@ -1,54 +1,58 @@
 <template>
   <v-card class="pa-5">
     <v-row>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="6" class="my-auto">
         <carousel :images="Images.get(currentRouteId)" />
-        {{ imgArray }}
-
-        <v-row class="ma-2" no-gutters>
-          <v-col
-            cols="6"
-            class="d-flex text-center justify-center align-center"
-          >
-            <h3>Add Quantity :</h3>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              v-model="addedQuantity"
-              :rules="[rules.required, rules.zero, rules.max]"
-              :hint="hint"
-              label="Quantity"
-              variant="underlined"
-            >
-            </v-text-field>
-          </v-col>
-        </v-row>
-
-        <div class="d-flex justify-center align-center" style="gap: 3rem">
-          <v-btn
-            height="40"
-            :loading="loading"
-            :disabled="loading"
-            color="blue-grey"
-            prepend-icon="mdi-cart-plus"
-            @click="addToCartHandler"
-          >
-            {{ addToCartText }}
-          </v-btn>
-          <v-btn
-            height="40"
-            :loading="loading"
-            :disabled="loading"
-            color="orange-darken-2"
-            prepend-icon="mdi-lightning-bolt"
-            @click="load"
-          >
-            Buy now
-          </v-btn>
-        </div>
       </v-col>
-      <v-col cols="12" sm="6">
-        <product-details />
+      <v-col cols="12" sm="6" class="my-auto">
+        <v-container class="m-0 p-0">
+          <product-details />
+          <v-row class="my-5" no-gutters>
+            <v-text class="mx-2 font-weight-bold">Add Quantity :</v-text>
+            <v-btn
+              size="medium"
+              variant="text"
+              icon="mdi-minus-circle"
+              @click="addedQuantity >= 2 ? addedQuantity-- : addedQuantity"
+            ></v-btn>
+            <v-text class="mx-2">{{ addedQuantity }}</v-text>
+            <v-btn
+              size="medium"
+              variant="text"
+              icon="mdi-plus-circle"
+              @click="addedQuantity++"
+            ></v-btn>
+          </v-row>
+          <v-row>
+            <v-col
+              ><div
+                class="d-flex justify-center align-center"
+                style="gap: 3rem"
+              >
+                <v-btn
+                  height="40"
+                  :loading="loading1"
+                  :disabled="loading1"
+                  color="blue-grey"
+                  prepend-icon="mdi-cart-plus"
+                  @click="addToCartHandler"
+                >
+                  {{ addToCartText }}
+                </v-btn>
+                <v-btn
+                  height="40"
+                  :loading="loading2"
+                  :disabled="loading2"
+                  color="orange-darken-2"
+                  prepend-icon="mdi-lightning-bolt"
+                  @click="buyNowHandler"
+                >
+                  Buy now
+                </v-btn>
+              </div></v-col
+            >
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-card>
@@ -56,7 +60,6 @@
 
 <script lang="ts">
 import { UseFetchProducts, useImageConversion } from "@/store/composables";
-import axios from "@/plugins/axios";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -69,12 +72,13 @@ export default defineComponent({
   name: "Product",
   components: { Carousel, ProductDetails },
   setup() {
-    const loading = ref(false);
+    const loading1 = ref(false);
+    const loading2 = ref(false);
     const addedQuantity = ref(1);
     const addToCartText = ref("Add to Cart");
     const load = () => {
-      loading.value = true;
-      setTimeout(() => (loading.value = false), 3000);
+      loading1.value = true;
+      setTimeout(() => (loading1.value = false), 3000);
     };
 
     const store = useStore();
@@ -86,8 +90,11 @@ export default defineComponent({
     //const imgArray = computed(() => Images.value);
 
     const addToCartHandler = () => {
-      loading.value = true;
-      axios.post("");
+      loading1.value = true;
+    };
+
+    const buyNowHandler = () => {
+      loading2.value = true;
     };
 
     const rules = {
@@ -96,10 +103,10 @@ export default defineComponent({
       max: (value: number) => value <= 5 || "Maximum Order Quantity is 5",
     };
     const hint: string = ``;
-
     return {
       load,
-      loading,
+      loading1,
+      loading2,
       Images,
       currentRouteId,
       addedQuantity,
@@ -108,6 +115,7 @@ export default defineComponent({
       hint,
       addToCartHandler,
       addToCartText,
+      buyNowHandler,
     };
   },
 });

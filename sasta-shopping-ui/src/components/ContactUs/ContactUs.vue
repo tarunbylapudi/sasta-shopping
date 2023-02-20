@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto my-auto pa-5" max-width="700">
-    <v-form validate-on="submit" @submit.prevent="contactUsHandler">
+    <v-form v-model="valid" @submit.prevent="contactUsHandler">
       <v-container>
         <v-row>
           <v-col cols="12" sm="6">
@@ -26,7 +26,6 @@
           <v-col cols="12" sm="6">
             <v-text-field
               v-model="phone"
-              :rules="[rules.phone]"
               type="tel"
               variant="underlined"
               label="Phone"
@@ -75,34 +74,55 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn type="submit" variant="text" color="teal-accent-4">
+        <v-btn
+          type="submit"
+          :disabled="!valid"
+          variant="text"
+          color="teal-accent-4"
+        >
           Submit
         </v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
-  <snack-bar
-    text="Your Query has been submitted !, We will get back you ASAP!"
-    :snack="snack"
-  />
+
+  <v-snackbar v-model="snack">{{ text }}</v-snackbar>
 </template>
 <script lang="ts">
-import axios from "@/plugins/axios";
 import { defineComponent, ref } from "vue";
-import SnackBar from "../shared/SnackBar.vue";
+//import { UseContactUs } from "@/store/composables";
+//import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { CONTACT_US } from "@/store/constants";
 
 export default defineComponent({
   name: "ContactUs",
-  components: { SnackBar },
+
   setup() {
+    // const router = useRouter();
+    const store = useStore();
+
     const snack = ref(false);
+    const text = ref(
+      "Your Query has been submited !, We will get back you ASAP!"
+    );
 
     const progress = ref(false);
+    const valid = ref(false);
     const name = ref("");
     const email = ref("");
-    const phone = ref<number>();
+    const phone = ref();
     const issueCategory = ref("");
     const issueDiscription = ref("");
+
+    // const clearAllFeilds = () => {
+    //   name.value = "";
+    //   email.value = "";
+    //   phone.value = "";
+    //   issueCategory.value = "";
+    //   issueDiscription.value = "";
+    //   valid.value = false;
+    // };
 
     const rules = {
       required: (value: any) => !!value || "Required.",
@@ -124,21 +144,22 @@ export default defineComponent({
     };
 
     const contactUsHandler = async () => {
-      try {
-        const response = await axios.post(process.env.VUE_APP_POST_CONTACT_US, {
-          name: name.value,
-          email: email.value,
-          mobile: phone.value,
-          type: issueCategory.value,
-          description: issueDiscription.value,
-        });
-        console.log(snack.value);
+      const result = await store.dispatch(CONTACT_US, {
+        name: name.value,
+        email: email.value,
+        mobile: phone.value,
+        type: issueCategory.value,
+        description: issueDiscription.value,
+      });
+      if (result) {
         snack.value = true;
-        console.log(snack.value);
-
-        console.log(response.status);
-      } catch (error) {
-        console.error(error);
+        //clearAllFeilds();
+        // router.push({ name: "home" });
+      } else {
+        text.value = "Something went wrong, Please try again!";
+        snack.value = true;
+        //router.push({ name: "home" });
+        console.log("ContactUs failed");
       }
     };
 
@@ -153,7 +174,9 @@ export default defineComponent({
       contactUsHandler,
       rules,
       snack,
+      text,
       progress,
+      valid,
     };
   },
 });

@@ -1,4 +1,6 @@
 import { Commit } from "vuex";
+import { User } from "./types";
+import { contactUs } from "@/api/types";
 import {
   FETCH_PRODUCTS,
   FETCH_PRODUCT_DETAILS,
@@ -8,10 +10,12 @@ import {
   LOGOUT,
   SET_IS_AUTHENTICATED,
   SET_USER,
+  CONTACT_US,
 } from "./constants";
 import { LoginPayload, LoginResponse } from "@/api/types";
 import getProducts from "@/api/getProducts";
 import getProductDetails from "@/api/getProductDetails";
+import postContactUs from "@/api/postContactUs";
 import { decodeToken, removeToken, setToken } from "@/Utils/auth/jwtHelper";
 import axios from "@/plugins/axios";
 
@@ -43,8 +47,9 @@ const actions = {
 
       setToken(token);
 
-      const user = decodeToken(token);
+      const user = decodeToken(token) as User;
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", user.role);
 
       context.commit(SET_USER, user);
       context.commit(SET_IS_AUTHENTICATED, true);
@@ -57,9 +62,13 @@ const actions = {
 
   [LOGOUT]: async (context: Context) => {
     removeToken();
+    localStorage.removeItem("role");
     localStorage.removeItem("user");
     context.commit(SET_USER, null);
     context.commit(SET_IS_AUTHENTICATED, false);
+  },
+  [CONTACT_US]: async (context: Context, payload: contactUs) => {
+    return await postContactUs(payload);
   },
 };
 

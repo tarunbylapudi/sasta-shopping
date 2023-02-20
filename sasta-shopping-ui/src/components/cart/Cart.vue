@@ -1,31 +1,33 @@
 <template>
-  <v-row>
-    <v-col cols="12" md="8">
-      <v-card>
-        <v-card-text v-for="item in cartItems" :key="item.id">
-          <cart-item-layout />
-        </v-card-text>
-      </v-card>
-    </v-col>
-    <v-col cols="12" md="4">
-      <v-card>
-        <v-card-title>Order Summary</v-card-title>
-        <v-card-text>
-          <v-list>
-            <v-list-item v-for="x in forecast" :key="x.number">
-              <v-list-item-content>
-                <v-list-item-title>{{ x.text }}</v-list-item-title>
-              </v-list-item-content>
-              <template #append>
-                <v-list-item-title>{{ x.number }}</v-list-item-title>
-              </template>
-            </v-list-item>
-          </v-list>
-          <v-btn block color="primary" class="mt-5">Checkout</v-btn>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container class="">
+    <v-row>
+      <v-col cols="12" md="8">
+        <v-card>
+          <v-card-text v-for="item in cartItems" :key="item.id">
+            <cart-item-layout />
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="4">
+        <v-card>
+          <v-card-title>Order Summary</v-card-title>
+          <v-card-text>
+            <v-list>
+              <v-list-item v-for="x in forecast" :key="x.number">
+                <v-list-item-content>
+                  <v-list-item-title>{{ x.text }}</v-list-item-title>
+                </v-list-item-content>
+                <template #append>
+                  <v-list-item-title>{{ x.number }}</v-list-item-title>
+                </template>
+              </v-list-item>
+            </v-list>
+            <v-btn block color="primary" class="mt-5">Checkout</v-btn>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

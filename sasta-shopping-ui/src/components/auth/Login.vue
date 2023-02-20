@@ -50,6 +50,7 @@ export default defineComponent({
   name: "Login",
   setup() {
     const store = useStore();
+
     const snack = ref(false);
     const text = ref("");
     const snackColor = ref("");

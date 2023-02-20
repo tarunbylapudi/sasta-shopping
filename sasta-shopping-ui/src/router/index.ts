@@ -30,6 +30,9 @@ const ContactUs = () =>
 const HomeView = () =>
   import(/* webpackChunkName:"home" */ "@/views/HomeView.vue");
 
+const AboutUs = () =>
+  import(/* webpackChunkName:"aboutUS" */ "@/components/shared/AboutUs.vue");
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/profile",
@@ -52,7 +55,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/shop",
     name: "shop",
     component: ShopView,
-    meta: { requiresAuth: true, requiresRole: "admin" },
+    meta: { requiresAuth: true },
   },
   {
     path: "/products/:id",
@@ -64,7 +67,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/cart",
     name: "cart",
     component: CartView,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, requiresRole: "ADMIN" },
   },
   {
     path: "/contact",
@@ -77,6 +80,7 @@ const routes: Array<RouteRecordRaw> = [
     component: AccessDenied,
     meta: { requiresAuth: true },
   },
+
   {
     path: "/:pathMatch(.*)*",
     name: "not-found",

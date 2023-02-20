@@ -5,7 +5,9 @@ import {
   FETCH_PRODUCTS,
   FETCH_PRODUCT_DETAILS,
   IMAGE_CONVERSION,
+  CONTACT_US,
 } from "./constants";
+import { contactUs } from "@/api/types";
 
 //getters
 
@@ -29,4 +31,9 @@ export const UseFetchProducts = () => {
 export const UseFetchProductDetails = (productId: string) => {
   const store = useStore();
   return store.dispatch(FETCH_PRODUCT_DETAILS, productId);
+};
+
+export const UseContactUs = (payload: contactUs) => {
+  const store = useStore();
+  return store.dispatch(CONTACT_US, payload);
 };
