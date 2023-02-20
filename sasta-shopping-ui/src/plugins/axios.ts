@@ -3,7 +3,7 @@ import { User } from "@/store/types";
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
-  timeout: 5000,
+  timeout: 50000,
 });
 
 // Add an interceptor to add the `Authorization` header to every request

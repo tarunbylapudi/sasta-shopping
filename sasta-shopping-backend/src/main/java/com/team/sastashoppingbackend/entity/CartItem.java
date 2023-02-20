@@ -1,6 +1,7 @@
 package com.team.sastashoppingbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.team.sastashoppingbackend.entity.auth.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class CartItem {
 	private Product product;
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="cart_id")
-	private Cart cart;
+	@JoinColumn(name="user_id")
+	private User user;
 
 }

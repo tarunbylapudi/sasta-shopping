@@ -110,7 +110,7 @@ export default defineComponent({
     const isAuthenticated = computed(() => store.state.isAuthenticated);
 
     const mainNavSnackHandler = () => {
-      if (isAuthenticated.value) {
+      if (!isAuthenticated.value) {
         console.log(isAuthenticated.value);
         console.log("s");
         snack.value = true;

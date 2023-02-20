@@ -34,7 +34,7 @@ public class AuthenticationService {
         .build();
     repository.save(user);
     var jwtToken = jwtService.generateToken(createClaims(user),new MyUserDetails(user));
-    boolean isAdmin = "ADMIN".equals(user.getRole());
+    boolean isAdmin = "ADMIN".equals(user.getRole().name());
     return AuthenticationResponse.builder()
         .token(jwtToken)
         .isAdmin(isAdmin)
