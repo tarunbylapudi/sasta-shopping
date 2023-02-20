@@ -63,7 +63,7 @@ private Map<String,Object> createClaims(User user){
 	Map<String,Object> map = new HashMap<>();
 	map.put("firstName", user.getFirstName());
 	map.put("role", user.getRole().name());
-	
+	map.put("userId", user.getId());
 	return map;
 }
 
