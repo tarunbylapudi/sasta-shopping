@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.sastashoppingbackend.entity.Cart;
-import com.team.sastashoppingbackend.entity.CartItems;
+import com.team.sastashoppingbackend.entity.CartItem;
 import com.team.sastashoppingbackend.entity.Product;
 import com.team.sastashoppingbackend.entity.auth.User;
-import com.team.sastashoppingbackend.repository.CartItemsRepository;
+import com.team.sastashoppingbackend.repository.CartItemRepository;
 import com.team.sastashoppingbackend.repository.CartRepository;
 
 @Service
@@ -20,12 +20,12 @@ public class CartService {
   private CartRepository cartRepository;
 
   @Autowired
-  private CartItemsRepository cartItemsRepository;
+  private CartItemRepository cartItemRepository;
 
   public Cart createCart(User user) {
     Cart cart = new Cart();
     cart.setUser(user);
-    cart.setItems(new ArrayList<CartItems>());
+    cart.setItems(new ArrayList<CartItem>());
     return cartRepository.save(cart);
   }
 
@@ -34,7 +34,7 @@ public class CartService {
   }
 
   public void addItemToCart(Cart cart, Product product, int quantity) {
-    CartItems cartItem = new CartItems();
+    CartItem cartItem = new CartItem();
     cartItem.setCart(cart);
     cartItem.setProduct(product);
     cartItem.setQuantity(quantity);
@@ -42,12 +42,12 @@ public class CartService {
     cartRepository.save(cart);
   }
 
-  public List<CartItems> getCartItems(Cart cart) {
+  public List<CartItem> getCartItems(Cart cart) {
     return cart.getItems();
   }
 
-  public void removeItemFromCart(CartItems cartItem) {
-    cartItemsRepository.delete(cartItem);
+  public void removeItemFromCart(CartItem cartItem) {
+	  cartItemRepository.delete(cartItem);
   }
 
 }
