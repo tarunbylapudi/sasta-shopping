@@ -44,9 +44,5 @@ public class CartItemService {
         return cartItemRepository.findByUserId(userId);
     }
     
-	@SuppressWarnings("deprecation")
-	public CartItem getCartById(Long id) {
-		// TODO Auto-generated method stub
-		return cartItemRepository.getById(id);
-	}
+
 }

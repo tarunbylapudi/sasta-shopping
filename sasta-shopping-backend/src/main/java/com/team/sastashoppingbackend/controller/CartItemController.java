@@ -39,10 +39,7 @@ public class CartItemController {
         cartItemService.removeAllCartItems(userId);
     }
     
-    @GetMapping("/{id}")
-    public CartItem getCartById(@PathVariable Long id) {
-        return cartItemService.getCartById(id);
-    }
+ 
     
     @GetMapping
     public List<CartItem> getAllCartItems(@RequestHeader("userId") Long userId) {
