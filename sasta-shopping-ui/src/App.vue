@@ -1,7 +1,10 @@
 <template>
   <v-app id="inspire">
     <v-app-bar>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        v-show="isAuthenticated"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
 
       <v-toolbar-title>Sasta Shopping</v-toolbar-title>
       <v-list :lines="false" density="compact" class="displayNone">
@@ -11,7 +14,7 @@
           :to="item.path"
           active-color="primary"
           class="horizontal-list-item"
-          @click="mainNavSnackHandler"
+          @click="mainNavSnackHandler(item.text)"
         >
           <v-list-item-content>
             {{ item.text }}
@@ -55,6 +58,7 @@
           :value="item"
           :to="item.path"
           active-color="primary"
+          @click="mainNavSnackHandler(item.text)"
         >
           <template #prepend>
             <v-icon :icon="item.icon"></v-icon>
@@ -70,7 +74,7 @@
         <router-view />
       </v-container>
     </v-main>
-    <foooter />
+    <foooter v-show="isAuthenticated" />
   </v-app>
   <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
 </template>
@@ -88,6 +92,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    //const route = useRoute();
 
     const snack = ref(false);
     const text = ref("");
@@ -109,10 +114,9 @@ export default defineComponent({
     ];
     const isAuthenticated = computed(() => store.state.isAuthenticated);
 
-    const mainNavSnackHandler = () => {
-      if (!isAuthenticated.value) {
-        console.log(isAuthenticated.value);
-        console.log("s");
+    const mainNavSnackHandler = (routeToGo: string) => {
+      if (!isAuthenticated.value && routeToGo !== "Contact Us") {
+        console.log(routeToGo);
         snack.value = true;
         text.value = "Please Login First!";
         snackColor.value = "red";

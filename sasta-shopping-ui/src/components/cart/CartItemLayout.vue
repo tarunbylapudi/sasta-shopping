@@ -27,6 +27,7 @@
                   <v-list-item-title>{{ x.number }}</v-list-item-title>
                 </template>
               </v-list-item>
+              <div><v-btn color="blue" class="ml-3">Remove item</v-btn></div>
             </v-list>
           </v-col>
         </v-row>

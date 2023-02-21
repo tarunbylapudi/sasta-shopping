@@ -18,6 +18,7 @@ public class CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
     
+    @Transactional
     public CartItem addCartItem(Long userId, Long productId, int quantity) {
         User user = new User();
         user.setId(userId);
@@ -29,6 +30,7 @@ public class CartItemService {
         cartItem.setProduct(product);
         return cartItemRepository.save(cartItem);
     }
+    
     @Transactional
     public void removeCartItem(Long userId, Long productId) {
         cartItemRepository.deleteByUserIdAndProductId(userId, productId);

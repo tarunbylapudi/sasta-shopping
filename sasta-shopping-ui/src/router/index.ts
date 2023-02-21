@@ -33,6 +33,9 @@ const HomeView = () =>
 const AboutUs = () =>
   import(/* webpackChunkName:"aboutUS" */ "@/components/shared/AboutUs.vue");
 
+const SignUp = () =>
+  import(/* webpackChunkName:"signUp" */ "@/components/auth/SignUp.vue");
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/profile",
@@ -50,6 +53,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/signUp",
+    name: "signUp",
+    component: SignUp,
   },
   {
     path: "/shop",

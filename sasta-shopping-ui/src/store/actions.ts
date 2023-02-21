@@ -1,21 +1,26 @@
 import { Commit } from "vuex";
 import { User } from "./types";
-import { contactUs } from "@/api/types";
+import { signUp, contactUspayload, addToCartPayload } from "@/api/types";
 import {
   FETCH_PRODUCTS,
   FETCH_PRODUCT_DETAILS,
   UPDATE_PRODUCTS,
   UPDATE_PRODUCT_DETAILS,
   LOGIN,
+  SIGN_UP,
   LOGOUT,
   SET_IS_AUTHENTICATED,
   SET_USER,
   CONTACT_US,
+  ADD_TO_CART,
 } from "./constants";
 import { LoginPayload, LoginResponse } from "@/api/types";
 import getProducts from "@/api/getProducts";
 import getProductDetails from "@/api/getProductDetails";
 import postContactUs from "@/api/postContactUs";
+import postSignUp from "@/api/postSignUp";
+import postLogin from "@/api/postLogin";
+import postAddToCart from "@/api/postAddToCart";
 import { decodeToken, removeToken, setToken } from "@/Utils/auth/jwtHelper";
 import axios from "@/plugins/axios";
 
@@ -33,31 +38,12 @@ const actions = {
     context.commit(UPDATE_PRODUCT_DETAILS, productDetails);
   },
   [LOGIN]: async (context: Context, payload: LoginPayload) => {
-    try {
-      console.log(payload);
-      const baseUrl = process.env.VUE_APP_API_URL;
-      const response = await axios.post<LoginResponse>(
-        `${baseUrl}/api/auth/authenticate`,
+    return await postLogin(context, payload);
+  },
 
-        payload
-      );
-      console.log(response.data);
-      const token = response.data.token;
-      const isAdmin = response.data.isAdmin;
-
-      setToken(token);
-
-      const user = decodeToken(token) as User;
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("role", user.role);
-
-      context.commit(SET_USER, user);
-      context.commit(SET_IS_AUTHENTICATED, true);
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
+  [SIGN_UP]: async (context: Context, payload: signUp) => {
+    console.log(payload);
+    return await postSignUp(payload);
   },
 
   [LOGOUT]: async (context: Context) => {
@@ -67,8 +53,11 @@ const actions = {
     context.commit(SET_USER, null);
     context.commit(SET_IS_AUTHENTICATED, false);
   },
-  [CONTACT_US]: async (context: Context, payload: contactUs) => {
+  [CONTACT_US]: async (context: Context, payload: contactUspayload) => {
     return await postContactUs(payload);
+  },
+  [ADD_TO_CART]: async (context: Context, payload: addToCartPayload) => {
+    return await postAddToCart(payload);
   },
 };
 

@@ -13,6 +13,7 @@ const state = (): GlobalState => {
       quantity: 0,
       images: [{ id: 0, name: "", type: "", bytes: "" }],
     },
+    cart: [],
   };
 };
 

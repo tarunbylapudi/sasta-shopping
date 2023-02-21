@@ -22,7 +22,7 @@
                 </template>
               </v-list-item>
             </v-list>
-            <v-btn block color="primary" class="mt-5">Checkout</v-btn>
+            <v-btn block color="blue" class="mt-5">Checkout</v-btn>
           </v-card-text>
         </v-card>
       </v-col>

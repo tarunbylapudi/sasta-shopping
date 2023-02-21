@@ -7,7 +7,7 @@ import {
   IMAGE_CONVERSION,
   CONTACT_US,
 } from "./constants";
-import { contactUs } from "@/api/types";
+import { contactUspayload } from "@/api/types";
 
 //getters
 
@@ -33,7 +33,7 @@ export const UseFetchProductDetails = (productId: string) => {
   return store.dispatch(FETCH_PRODUCT_DETAILS, productId);
 };
 
-export const UseContactUs = (payload: contactUs) => {
+export const UseContactUs = (payload: contactUspayload) => {
   const store = useStore();
   return store.dispatch(CONTACT_US, payload);
 };

@@ -56,10 +56,13 @@
       </v-col>
     </v-row>
   </v-card>
+  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
 </template>
 
 <script lang="ts">
+import router from "@/router";
 import { UseFetchProducts, useImageConversion } from "@/store/composables";
+import { ADD_TO_CART } from "@/store/constants";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -72,6 +75,10 @@ export default defineComponent({
   name: "Product",
   components: { Carousel, ProductDetails },
   setup() {
+    const snack = ref(false);
+    const text = ref("Product added to cart!");
+    const snackColor = ref("green");
+
     const loading1 = ref(false);
     const loading2 = ref(false);
     const addedQuantity = ref(1);
@@ -87,10 +94,32 @@ export default defineComponent({
     const Images = useImageConversion();
     const products = computed(() => store.state.products);
     const currentRouteId = +route.params.id;
+    const productId = currentRouteId;
+
     //const imgArray = computed(() => Images.value);
 
-    const addToCartHandler = () => {
+    const addToCartHandler = async () => {
       loading1.value = true;
+      const result = await store.dispatch(ADD_TO_CART, {
+        productId: productId,
+        quantity: addedQuantity.value,
+      });
+      if (result) {
+        loading1.value = false;
+        snack.value = true;
+        setTimeout(() => {
+          router.back();
+        }, 2000);
+      } else {
+        loading1.value = false;
+        text.value = "Some thing is worng, Please try again after sometime!";
+        snack.value = true;
+        snackColor.value = "red";
+        setTimeout(() => {
+          router.back();
+        }, 1500);
+        console.log("Add to cart failed");
+      }
     };
 
     const buyNowHandler = () => {
@@ -116,6 +145,9 @@ export default defineComponent({
       addToCartHandler,
       addToCartText,
       buyNowHandler,
+      snack,
+      snackColor,
+      text,
     };
   },
 });

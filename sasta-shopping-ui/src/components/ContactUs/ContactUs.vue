@@ -74,24 +74,19 @@
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn
-          type="submit"
-          :disabled="!valid"
-          variant="text"
-          color="teal-accent-4"
-        >
+        <v-btn type="submit" :disabled="!valid" variant="elevated" color="blue">
           Submit
         </v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
 
-  <v-snackbar v-model="snack">{{ text }}</v-snackbar>
+  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 //import { UseContactUs } from "@/store/composables";
-//import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { CONTACT_US } from "@/store/constants";
 
@@ -99,10 +94,11 @@ export default defineComponent({
   name: "ContactUs",
 
   setup() {
-    // const router = useRouter();
+    const router = useRouter();
     const store = useStore();
 
     const snack = ref(false);
+    const snackColor = ref("green");
     const text = ref(
       "Your Query has been submited !, We will get back you ASAP!"
     );
@@ -154,11 +150,16 @@ export default defineComponent({
       if (result) {
         snack.value = true;
         //clearAllFeilds();
-        // router.push({ name: "home" });
+        setTimeout(() => {
+          router.push({ name: "home" });
+        }, 2000);
       } else {
         text.value = "Something went wrong, Please try again!";
         snack.value = true;
-        //router.push({ name: "home" });
+        snackColor.value = "red";
+        setTimeout(() => {
+          router.push({ name: "home" });
+        }, 2000);
         console.log("ContactUs failed");
       }
     };
@@ -177,6 +178,7 @@ export default defineComponent({
       text,
       progress,
       valid,
+      snackColor,
     };
   },
 });

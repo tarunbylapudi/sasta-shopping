@@ -13,6 +13,11 @@ export interface GlobalState {
     quantity: number;
     images: Image[];
   };
+  cart:
+}
+
+export interface Cart{
+  
 }
 
 export interface User {
