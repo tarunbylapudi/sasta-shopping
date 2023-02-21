@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team.sastashoppingbackend.entity.CartItem;
+import com.team.sastashoppingbackend.entity.Product;
 import com.team.sastashoppingbackend.service.CartItemService;
 
 @RestController
@@ -34,6 +35,11 @@ public class CartItemController {
     @DeleteMapping
     public void removeAllCartItems(@RequestHeader("userId") Long userId) {
         cartItemService.removeAllCartItems(userId);
+    }
+    
+    @GetMapping("/{id}")
+    public CartItem getCartById(@PathVariable Long id) {
+        return cartItemService.getCartById(id);
     }
     
     @GetMapping
