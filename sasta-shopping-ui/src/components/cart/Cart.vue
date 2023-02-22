@@ -1,10 +1,11 @@
 <template>
   <v-container class="">
-    <v-row>
+    <v-row v-if="currentCart.size === 0"><empty-cart /></v-row>
+    <v-row v-else>
       <v-col cols="12" md="8">
         <v-card>
-          <v-card-text v-for="item in cartItems" :key="item.id">
-            <cart-item-layout />
+          <v-card-text v-for="(item, key) in cartItems" :key="key">
+            <cart-item-layout :item="item[1]" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -23,6 +24,7 @@
               </v-list-item>
             </v-list>
             <v-btn block color="blue" class="mt-5">Checkout</v-btn>
+            <v-btn block color="blue" class="mt-5">Clear cart</v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -30,11 +32,91 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+// interface CartItem {
+//   items: Map<number, { productId: number; quantity: number }>;
+// }
+
+import { Product } from "@/api/types";
+import {
+  usecurrentCart,
+  useFetchCart,
+  UseFetchProducts,
+  useImageConversion,
+} from "@/store/composables";
+
+//import { Cart } from "@/store/types";
+import { computed, defineComponent, onMounted } from "vue";
+import { useStore } from "vuex";
+import CartItemLayout from "./CartItemLayout.vue";
+import EmptyCart from "./EmptyCart.vue";
+
+export default defineComponent({
+  name: "Cart",
+  components: { CartItemLayout, EmptyCart },
+  setup() {
+    const store = useStore();
+    onMounted(UseFetchProducts);
+    onMounted(useFetchCart);
+
+    const Images = useImageConversion();
+    const products = computed<Product[]>(() => store.state.products);
+    const currentCart = usecurrentCart();
+    // const clearCart = async () => {
+    //   try {
+    //     const response = await axios.delete("http://localhost:8090/cartitems");
+    //     console.log(response.data);
+    //     useFetchCart();
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
+
+    const cartItems = computed(() => {
+      const Items = new Map<number, object>();
+      currentCart.value.forEach((item) => {
+        const imgArray: string[] = Images.value.get(item[0]) as string[];
+        const imgLink: string = imgArray[0];
+
+        const productId: number = products.value[item[0] - 1].id;
+        const productName: string = products.value[item[0] - 1].name;
+        const productPrice: number = products.value[item[0] - 1].price;
+        const quantity: number = item[1];
+
+        Items.set(item[0], {
+          productId: productId,
+          productName: productName,
+          imgLink: imgLink,
+          productPrice: productPrice,
+          quantity: quantity,
+        });
+      });
+      console.log(Items);
+      return Items;
+    });
+
+    const forecast = [
+      {
+        text: "Cart Price",
+        number: 2,
+      },
+      {
+        text: "Shipping Charges",
+        number: 20,
+      },
+      { text: "Total Price", number: 124 },
+    ];
+    return { cartItems, forecast, Images, products, currentCart };
+  },
+});
+</script>
+
+<!-- <script>
 import CartItemLayout from "@/components/cart/CartItemLayout.vue";
 export default {
   name: "Cart",
   components: { CartItemLayout },
+
   data() {
     return {
       cartItems: [
@@ -84,4 +166,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

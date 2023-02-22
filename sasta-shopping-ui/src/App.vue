@@ -76,7 +76,9 @@
     </v-main>
     <foooter v-show="isAuthenticated" />
   </v-app>
-  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
+  <v-snackbar v-model="snack" :color="snackColor" :timeout="2000">{{
+    text
+  }}</v-snackbar>
 </template>
 
 <script lang="ts">

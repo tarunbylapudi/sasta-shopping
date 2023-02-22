@@ -56,7 +56,9 @@
       </v-col>
     </v-row>
   </v-card>
-  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
+  <v-snackbar v-model="snack" :color="snackColor" :timeout="2000">{{
+    text
+  }}</v-snackbar>
 </template>
 
 <script lang="ts">
@@ -108,16 +110,16 @@ export default defineComponent({
         loading1.value = false;
         snack.value = true;
         setTimeout(() => {
-          router.back();
-        }, 2000);
+          router.push({ name: "shop" });
+        }, 1000);
       } else {
         loading1.value = false;
         text.value = "Some thing is worng, Please try again after sometime!";
         snack.value = true;
         snackColor.value = "red";
         setTimeout(() => {
-          router.back();
-        }, 1500);
+          router.push({ name: "shop" });
+        }, 1000);
         console.log("Add to cart failed");
       }
     };

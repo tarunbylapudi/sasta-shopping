@@ -25,7 +25,7 @@ export const useImageConversion = () => {
 
 export const usecurrentCart = () => {
   const store = useStore();
-  return computed<Map<number, object>>(() => store.getters[ETL_CART]);
+  return computed<Map<number, number[]>>(() => store.getters[ETL_CART]);
 };
 
 //actions

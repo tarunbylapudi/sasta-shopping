@@ -34,7 +34,7 @@ const getters = {
         product.images.map((image) => getters.BYTE_TO_IMAGE(image.bytes))
       );
     });
-    console.log(ProductImagesMap);
+
     return ProductImagesMap;
 
     // return state.products.map((product) =>
@@ -66,17 +66,14 @@ const getters = {
       const productId = item.product.id;
       const quantity = item.quantity;
       if (map.has(productId)) {
-        map.set(productId, {
-          productId: productId,
-          quantity: map.get(productId).quantity + quantity,
-        });
+        map.set(productId, [
+          productId,
+          map.get(productId)[quantity] + quantity,
+        ]);
       } else {
-        map.set(productId, {
-          productId: productId,
-          quantity: quantity,
-        });
+        map.set(productId, [productId, quantity]);
       }
-      console.log(map);
+
       return map;
     }, new Map());
     return currentCart;

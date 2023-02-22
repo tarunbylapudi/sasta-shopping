@@ -47,7 +47,9 @@
     </v-card>
   </v-container>
 
-  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
+  <v-snackbar v-model="snack" :color="snackColor" :timeout="2000">{{
+    text
+  }}</v-snackbar>
 </template>
 
 <script lang="ts">
@@ -79,7 +81,7 @@ export default defineComponent({
         store.commit(SET_IS_AUTHENTICATED, true);
         setTimeout(() => {
           router.push("/");
-        }, 1500);
+        }, 1000);
       } else {
         text.value = "Some thing is worng, Please try again after sometime!";
         snack.value = true;

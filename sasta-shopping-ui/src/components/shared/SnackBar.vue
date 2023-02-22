@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-snackbar v-model="snackbar">
+    <v-snackbar :timeout="2000" v-model="snackbar">
       {{ text }}
 
       <template #actions>

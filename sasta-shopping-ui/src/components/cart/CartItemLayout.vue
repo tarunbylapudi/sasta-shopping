@@ -2,15 +2,13 @@
   <v-row>
     <v-col cols="12" md="4" class="">
       <v-card width="170" height="auto">
-        <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-          height="100"
-          cover
-        ></v-img>
+        <v-img :src="cartItem.item.value.imgLink" height="125" cover></v-img>
+        <div class="ma-3 font-weight-bold">
+          <v-text class=""> {{ cartItem.item.value.productName }} </v-text>
+        </div>
 
-        <v-card-title> dhhds </v-card-title>
         <v-card-subtitle class="font-weight-bold mb-3"
-          >Price : ₹ sdjkj /-</v-card-subtitle
+          >Price : ₹ {{ cartItem.item.value.productPrice }} /-</v-card-subtitle
         >
       </v-card>
     </v-col>
@@ -27,7 +25,11 @@
                   <v-list-item-title>{{ x.number }}</v-list-item-title>
                 </template>
               </v-list-item>
-              <div><v-btn color="blue" class="ml-3">Remove item</v-btn></div>
+              <div>
+                <v-btn color="blue" class="ml-3" @click="removeItemFromCart"
+                  >Remove item</v-btn
+                >
+              </div>
             </v-list>
           </v-col>
         </v-row>
@@ -37,33 +39,38 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import { Product } from "@/api/types";
+import { defineComponent, toRefs } from "vue";
 export default defineComponent({
   name: "CartItemLayout",
   props: {
-    product: {
-      type: Object as PropType<Product>,
+    item: {
+      type: Object,
       required: true,
     },
   },
   setup(props) {
-    const productPageLink = computed(() => `/products/${props.product.id}`);
+    const removeItemFromCart = () => {};
+
+    const cartItem = toRefs(props);
+
     const forecast = [
       {
         text: "Selected Quantity",
-        number: 2,
+        number: cartItem.item.value.quantity,
       },
       {
         text: "Price per quantity",
-        number: 2,
+        number: cartItem.item.value.productPrice,
       },
-      { text: "Price", number: 2 },
+      {
+        text: "Price",
+        number: `${Math.ceil(
+          +cartItem.item.value.quantity * +cartItem.item.value.productPrice
+        )}`,
+      },
     ];
-    return { forecast, productPageLink };
-  },
-  data() {
-    return {};
+
+    return { forecast, removeItemFromCart, cartItem };
   },
 });
 </script>

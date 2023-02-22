@@ -81,7 +81,9 @@
     </v-form>
   </v-card>
 
-  <v-snackbar v-model="snack" :color="snackColor">{{ text }}</v-snackbar>
+  <v-snackbar v-model="snack" :color="snackColor" :timeout="2000">{{
+    text
+  }}</v-snackbar>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -152,14 +154,14 @@ export default defineComponent({
         //clearAllFeilds();
         setTimeout(() => {
           router.push({ name: "home" });
-        }, 2000);
+        }, 1000);
       } else {
         text.value = "Something went wrong, Please try again!";
         snack.value = true;
         snackColor.value = "red";
         setTimeout(() => {
           router.push({ name: "home" });
-        }, 2000);
+        }, 1000);
         console.log("ContactUs failed");
       }
     };
