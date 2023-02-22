@@ -1,10 +1,12 @@
-import { GlobalState } from "@/store/types";
+import { Cart, GlobalState } from "@/store/types";
 import {
   BYTE_TO_IMAGE,
   IMAGE_CONVERSION,
   UPDATE_PEODUCT_IMG_URL,
   IS_AUTHENTICATED,
   CURRENT_USER,
+  ETL_CART,
+  CART_DETAILS,
 } from "./constants";
 import { Image } from "@/api/types";
 import ImageByteProcesser from "@/Utils/ImageByteProcesser";
@@ -12,6 +14,15 @@ import state from "./state";
 
 interface ImageConversionGetters {
   BYTE_TO_IMAGE: (byteString: string) => boolean;
+}
+interface cartEtl {
+  ETL_CART: (
+    state: GlobalState
+  ) => Map<number, { productId: number; quantity: number }>;
+}
+interface CartMap {
+  productId: number;
+  quantity: number;
 }
 
 const getters = {
@@ -49,6 +60,37 @@ const getters = {
   [IS_AUTHENTICATED]: (state: GlobalState) => {
     return state.isAuthenticated;
   },
+
+  [ETL_CART]: (state: GlobalState) => {
+    const currentCart = state.cart.reduce((map, item: Cart) => {
+      const productId = item.product.id;
+      const quantity = item.quantity;
+      if (map.has(productId)) {
+        map.set(productId, {
+          productId: productId,
+          quantity: map.get(productId).quantity + quantity,
+        });
+      } else {
+        map.set(productId, {
+          productId: productId,
+          quantity: quantity,
+        });
+      }
+      console.log(map);
+      return map;
+    }, new Map());
+    return currentCart;
+  },
+
+  // [CART_DETAILS]:
+  //   (state: GlobalState) =>
+  //   (currentCart: Map<number, { productId: number; quantity: number }>) => {
+  //     currentCart.forEach((item) => {
+  //       state.products.
+  //     });
+
+  //     return currentCart;
+  //   },
 };
 
 export default getters;

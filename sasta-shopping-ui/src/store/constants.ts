@@ -22,3 +22,5 @@ export const IMAGE_CONVERSION = "IMAGE_CONVERSION";
 export const BYTE_TO_IMAGE = "BYTE_TO_IMAGE";
 export const CURRENT_USER = "CURRENT_USER";
 export const IS_AUTHENTICATED = "IS_AUTHENTICATED";
+export const ETL_CART = "ETL_CART";
+export const CART_DETAILS = "CART_DETAILS";

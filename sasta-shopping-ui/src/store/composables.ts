@@ -6,6 +6,8 @@ import {
   FETCH_PRODUCT_DETAILS,
   IMAGE_CONVERSION,
   CONTACT_US,
+  FETCH_CART,
+  ETL_CART,
 } from "./constants";
 import { contactUspayload } from "@/api/types";
 
@@ -21,6 +23,11 @@ export const useImageConversion = () => {
   return computed<Map<number, string[]>>(() => store.getters[IMAGE_CONVERSION]);
 };
 
+export const usecurrentCart = () => {
+  const store = useStore();
+  return computed<Map<number, object>>(() => store.getters[ETL_CART]);
+};
+
 //actions
 
 export const UseFetchProducts = () => {
@@ -31,6 +38,11 @@ export const UseFetchProducts = () => {
 export const UseFetchProductDetails = (productId: string) => {
   const store = useStore();
   return store.dispatch(FETCH_PRODUCT_DETAILS, productId);
+};
+
+export const useFetchCart = () => {
+  const store = useStore();
+  return store.dispatch(FETCH_CART);
 };
 
 export const UseContactUs = (payload: contactUspayload) => {

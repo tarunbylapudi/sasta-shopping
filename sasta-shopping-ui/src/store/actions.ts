@@ -13,6 +13,8 @@ import {
   SET_USER,
   CONTACT_US,
   ADD_TO_CART,
+  FETCH_CART,
+  UPDATE_CART,
 } from "./constants";
 import { LoginPayload, LoginResponse } from "@/api/types";
 import getProducts from "@/api/getProducts";
@@ -23,6 +25,7 @@ import postLogin from "@/api/postLogin";
 import postAddToCart from "@/api/postAddToCart";
 import { decodeToken, removeToken, setToken } from "@/Utils/auth/jwtHelper";
 import axios from "@/plugins/axios";
+import getCart from "@/api/getCart";
 
 interface Context {
   commit: Commit;
@@ -36,6 +39,10 @@ const actions = {
   [FETCH_PRODUCT_DETAILS]: async (context: Context, ProductId: string) => {
     const productDetails = await getProductDetails(ProductId);
     context.commit(UPDATE_PRODUCT_DETAILS, productDetails);
+  },
+  [FETCH_CART]: async (context: Context) => {
+    const cart = await getCart();
+    context.commit(UPDATE_CART, cart);
   },
   [LOGIN]: async (context: Context, payload: LoginPayload) => {
     return await postLogin(context, payload);

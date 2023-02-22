@@ -1,8 +1,9 @@
-import { GlobalState } from "@/store/types";
+import { Cart, GlobalState } from "@/store/types";
 import {
   UPDATE_PRODUCTS,
   UPDATE_PRODUCT_DETAILS,
   UPDATE_PEODUCT_IMG_URL,
+  UPDATE_CART,
   SET_IS_AUTHENTICATED,
   SET_USER,
 } from "./constants";
@@ -14,6 +15,10 @@ const mutations = {
   },
   [UPDATE_PRODUCT_DETAILS](state: GlobalState, productDetails: Product) {
     state.ProductDetails = productDetails;
+  },
+
+  [UPDATE_CART](state: GlobalState, cart: Cart[]) {
+    state.cart = cart;
   },
   //t
   [SET_USER](state: GlobalState, user: any) {

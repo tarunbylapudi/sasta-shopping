@@ -4,8 +4,8 @@ export interface Product {
   description: String;
   price: number;
   quantity: number;
-  images: Image[];
   rating: number;
+  images: Image[];
 }
 
 export interface Image {
