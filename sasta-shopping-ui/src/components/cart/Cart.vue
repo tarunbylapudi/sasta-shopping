@@ -30,6 +30,9 @@
       </v-col>
     </v-row>
   </v-container>
+  <v-snackbar v-model="snack" :color="snackColor" :timeout="2000">{{
+    text
+  }}</v-snackbar>
 </template>
 
 <script lang="ts">
@@ -46,7 +49,7 @@ import {
 } from "@/store/composables";
 
 //import { Cart } from "@/store/types";
-import { computed, defineComponent, onMounted } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import CartItemLayout from "./CartItemLayout.vue";
 import EmptyCart from "./EmptyCart.vue";
@@ -59,16 +62,23 @@ export default defineComponent({
     onMounted(UseFetchProducts);
     onMounted(useFetchCart);
 
+    const snack = ref(false);
+    const text = ref("cart Cleared!");
+    const snackColor = ref("green");
+
     const Images = useImageConversion();
     const products = computed<Product[]>(() => store.state.products);
     const currentCart = usecurrentCart();
     // const clearCart = async () => {
-    //   try {
-    //     const response = await axios.delete("http://localhost:8090/cartitems");
-    //     console.log(response.data);
+    //   const result = await UseClearCart();
+    //   if (result) {
     //     useFetchCart();
-    //   } catch (error) {
-    //     console.error(error);
+    //     snack.value = true;
+    //   } else {
+    //     snackColor.value = "red";
+    //     text.value = "Some thing is worng, Please try again after sometime!";
+    //     console.log("clear cart failed");
+    //     snack.value = true;
     //   }
     // };
 
@@ -106,7 +116,17 @@ export default defineComponent({
       },
       { text: "Total Price", number: 124 },
     ];
-    return { cartItems, forecast, Images, products, currentCart };
+    return {
+      cartItems,
+      forecast,
+      Images,
+      products,
+      currentCart,
+
+      snack,
+      snackColor,
+      text,
+    };
   },
 });
 </script>

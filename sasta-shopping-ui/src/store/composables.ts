@@ -8,6 +8,7 @@ import {
   CONTACT_US,
   FETCH_CART,
   ETL_CART,
+  CLEAR_CART,
 } from "./constants";
 import { contactUspayload } from "@/api/types";
 
@@ -48,4 +49,9 @@ export const useFetchCart = () => {
 export const UseContactUs = (payload: contactUspayload) => {
   const store = useStore();
   return store.dispatch(CONTACT_US, payload);
+};
+
+export const UseClearCart = () => {
+  const store = useStore();
+  return store.dispatch(CLEAR_CART);
 };

@@ -16,6 +16,7 @@ export const LOGOUT = "LOGOUT";
 export const CONTACT_US = "CONTACT_US";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const BUY_NOW = "BUY_NOW";
+export const CLEAR_CART = "CLEAR_CART";
 
 //getters
 export const IMAGE_CONVERSION = "IMAGE_CONVERSION";
